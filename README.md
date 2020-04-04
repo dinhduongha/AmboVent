@@ -1,3 +1,13 @@
+# ESP32
+- Port to [ESP32](https://github.com/espressif/arduino-esp32)
+- Broadcast state over UDP port 33333
+# Libraries
+- [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
+- [LiquidCrystal_I2C](https://github.com/johnrickman/LiquidCrystal_I2C)
+- [ServoESP32](https://github.com/RoboticsBrno/ServoESP32)
+- [SparkFun_MS5803](https://github.com/sparkfun/SparkFun_MS5803-14BA_Breakout_Arduino_Library)
+# Tools
+- [makeEspArduino](https://github.com/dinhduongha/makeEspArduino)
 # AmboVent  1690.108
 
     Automatic, Controlled Resuscitator Device
