@@ -24,6 +24,7 @@
 #include "ventilation_machine.h"
 
 #if ESP32
+#include <driver/adc.h>
 #include <Preferences.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
@@ -114,11 +115,10 @@ const int udpPort = 33333;
 #   define pin_LED_Fail 27   // FAIL and calib blue LED
 #ifdef ESP32_IOT_VN
 #   define pin_USR 23   // User LED
-#   define pin_FD 13    // freq Down
 #else
 #   define pin_USR 13   // User LED
-#   define pin_FD 23    // freq Down
 #endif
+#   define pin_FD 12    // freq Down
 #   define pin_FU 14    // freq Up
 #   define pin_AD 15    // Amp Down
 #   define pin_AU 2     // Amp Up
@@ -151,7 +151,7 @@ const int udpPort = 33333;
 #   define pin_CUR 35   // analog pin of current sense
 #   define pin_AMP 36   // analog pin of amplitude potentiometer control
 #   define pin_FRQ 39   // analog pin of amplitude frequency control
-#   define pin_PRE 12   // analog pin of pressure control
+#   define pin_PRE 33   // analog pin of pressure control
 #else
 #   define pin_PWM 3
 #   define pin_POT 0   // analog pin of potentiometer
@@ -218,6 +218,16 @@ void setup() {
   pinMode (pin_LED_FREQ,OUTPUT);
   pinMode (pin_LED_Fail,OUTPUT);
   pinMode (pin_USR,OUTPUT);
+
+#if ESP32
+  analogSetWidth(12);
+  analogSetAttenuation(ADC_11db); // sets an attenuation of 3.6
+  adcAttachPin(pin_POT);
+  adcAttachPin(pin_CUR);
+  adcAttachPin(pin_AMP);
+  adcAttachPin(pin_FRQ);
+  adcAttachPin(pin_PRE);
+#endif
 
   motor.attach(pin_PWM); 
   Serial.begin (115200);
